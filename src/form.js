@@ -1,20 +1,30 @@
-function renderForm() {
-    console.log('Render')
-    let input = document.getElementById('input').value;
-}
+import { inputTpl, buttonTpl, selectTpl, textareaTpl } from './templates'
 
-export function expandAttr(attributes, removaAttr) {
+export function renderForm(source) {
 
-    let out = ''
+    let form = ''
 
-    Object.keys(attributes).forEach(function(k) {
+    source.forEach(function (attributes) {
 
-        if(removaAttr && removaAttr.includes(k)) {
-            return
+        let input = attributes.tag
+
+        switch(input) {
+            case 'input':
+                form += inputTpl(attributes)
+            break
+            case 'button':
+                form += buttonTpl(attributes)
+            break
+            case 'select':
+                form += selectTpl(attributes)
+            break
+            case 'textarea':
+                form += textareaTpl(attributes)
+            break
         }
 
-        out += k + '="' + attributes[k] + '" '
     });
 
-    return out.trim()
+    return form
+
 }
